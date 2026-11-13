@@ -1,19 +1,27 @@
 export interface SkillGroup {
-  key: string;         // i18n key: "skills.group.languages" etc.
+  key: string;         // i18n key: "skills.group.backend" etc.
   skills: string[];
 }
 
 export const skillGroups: SkillGroup[] = [
   {
-    key: 'skills.group.languages',
-    skills: ['TypeScript', 'JavaScript', 'Go', 'Rust', 'Python', 'SQL'],
+    key: 'skills.group.backend',
+    skills: ['C#', 'ASP.NET Core', 'Entity Framework Core', 'SQL Server', 'REST APIs', 'JWT', 'SignalR', 'OCR', 'Hosted Services'],
   },
   {
-    key: 'skills.group.tools',
-    skills: ['Node.js', 'React', 'Astro', 'PostgreSQL', 'Docker', 'Kubernetes', 'GitHub Actions', 'Kafka'],
+    key: 'skills.group.frontend',
+    skills: ['Vue 3', 'Nuxt', 'TypeScript', 'JavaScript', 'HTML5', 'CSS3', 'Chart.js'],
   },
   {
-    key: 'skills.group.other',
-    skills: ['System Design', 'API Design', 'TDD', 'Agile', 'Technical Writing'],
+    key: 'skills.group.ai',
+    skills: ['OpenAI', 'Claude', 'MCP', 'Agentic AI', 'Chatbots'],
+  },
+  {
+    key: 'skills.group.architecture',
+    skills: ['Clean Architecture', 'DDD', 'Repository Pattern', 'Layered Design'],
+  },
+  {
+    key: 'skills.group.devops',
+    skills: ['Docker', 'Docker Compose', 'GitHub Actions', 'Git', 'GitHub'],
   },
 ];

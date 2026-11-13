@@ -34,7 +34,7 @@ const entries = (await getCollection('experience')).sort(
                   <span class="entry-company"> @ {company}</span>
                 </div>
                 <span class="entry-dates" aria-label={`${start} to ${endDate ? fmt(endDate) : 'Present'}`}>
-                  {start} – <span data-i18n-en={endDate ? fmt(endDate) : 'Present'} data-i18n-es-present={!endDate} data-i18n={!endDate ? 'experience.present' : undefined}>{endDate ? fmt(endDate) : 'Present'}</span>
+                  {start} – <span data-i18n-en={endDate ? fmt(endDate) : 'Present'} data-i18n-es={endDate ? fmt(endDate) : 'Actualidad'}>{endDate ? fmt(endDate) : 'Present'}</span>
                 </span>
               </div>
               <ul class="entry-bullets" role="list" id={entriesId}

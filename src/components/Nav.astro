@@ -1,5 +1,8 @@
 ---
 // Nav.astro — sticky top navigation bar with language toggle
+import { getCollection } from 'astro:content';
+
+const hasProjects = (await getCollection('projects')).length > 0;
 ---
 
 <header id="site-nav" role="banner">
@@ -18,7 +21,7 @@
         <a href="#skills"     role="listitem" data-nav-link data-i18n="nav.skills"     class="nav-link">skills</a>
         <a href="#experience" role="listitem" data-nav-link data-i18n="nav.experience" class="nav-link">experience</a>
         <a href="#education"  role="listitem" data-nav-link data-i18n="nav.education"  class="nav-link">education</a>
-        <a href="#projects"   role="listitem" data-nav-link data-i18n="nav.projects"   class="nav-link">projects</a>
+        {hasProjects && <a href="#projects"   role="listitem" data-nav-link data-i18n="nav.projects"   class="nav-link">projects</a>}
         <a href="#contact"    role="listitem" data-nav-link data-i18n="nav.contact"    class="nav-link">contact</a>
 
         <!-- Language toggle -->
@@ -49,7 +52,7 @@
           <a href="#skills"     role="listitem" data-nav-link data-i18n="nav.skills"     class="mobile-link">skills</a>
           <a href="#experience" role="listitem" data-nav-link data-i18n="nav.experience" class="mobile-link">experience</a>
           <a href="#education"  role="listitem" data-nav-link data-i18n="nav.education"  class="mobile-link">education</a>
-          <a href="#projects"   role="listitem" data-nav-link data-i18n="nav.projects"   class="mobile-link">projects</a>
+          {hasProjects && <a href="#projects"   role="listitem" data-nav-link data-i18n="nav.projects"   class="mobile-link">projects</a>}
           <a href="#contact"    role="listitem" data-nav-link data-i18n="nav.contact"    class="mobile-link">contact</a>
           <div class="mobile-actions">
             <span class="lang-toggle" role="group" aria-label="Language toggle">

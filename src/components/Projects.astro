@@ -7,6 +7,7 @@ const projects = (await getCollection('projects')).sort(
 );
 ---
 
+{projects.length > 0 && (
 <section id="projects" aria-labelledby="projects-heading">
   <div class="section-inner">
     <h2 id="projects-heading" class="section-heading">
@@ -31,6 +32,7 @@ const projects = (await getCollection('projects')).sort(
     </ul>
   </div>
 </section>
+)}
 
 <!-- Swap project descriptions on language change -->
 <script>
