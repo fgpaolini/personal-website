@@ -1,0 +1,80 @@
+---
+import { getCollection } from 'astro:content';
+import ProjectCard from './ProjectCard.astro';
+
+const projects = (await getCollection('projects')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+---
+
+<section id="projects" aria-labelledby="projects-heading">
+  <div class="section-inner">
+    <h2 id="projects-heading" class="section-heading">
+      <span aria-hidden="true" class="prompt">~/</span><span data-i18n="projects.section">projects</span>
+    </h2>
+    <p class="section-command" aria-hidden="true"><span data-i18n="projects.command">$ ls projects/</span></p>
+
+    <ul class="projects-grid" role="list">
+      {projects.map((project) => (
+        <li role="listitem">
+          <ProjectCard
+            title={project.data.title}
+            description={project.data.description}
+            description_es={project.data.description_es}
+            tags={project.data.tags}
+            liveUrl={project.data.liveUrl}
+            repoUrl={project.data.repoUrl}
+            slug={project.slug}
+          />
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<!-- Swap project descriptions on language change -->
+<script>
+  import { detectLang } from '../i18n/i18n';
+  import type { Lang } from '../i18n/i18n';
+
+  function applyDescriptions(lang: Lang) {
+    document.querySelectorAll<HTMLElement>('.project-card').forEach((card) => {
+      const desc = card.querySelector<HTMLElement>('.card-desc');
+      if (!desc) return;
+      const text = lang === 'es' ? card.dataset.descEs : card.dataset.descEn;
+      if (text) desc.textContent = text;
+    });
+  }
+
+  applyDescriptions(detectLang());
+
+  document.addEventListener('langchange', (e: Event) => {
+    applyDescriptions((e as CustomEvent<Lang>).detail);
+  });
+</script>
+
+<style>
+  #projects { padding: 5rem 1.5rem; }
+
+  .section-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .projects-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .projects-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (min-width: 1024px) {
+    .projects-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>

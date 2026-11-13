@@ -1,0 +1,49 @@
+{
+  "a11y.skip_link": "Skip to main content",
+
+  "nav.about":       "about",
+  "nav.skills":      "skills",
+  "nav.experience":  "experience",
+  "nav.education":   "education",
+  "nav.projects":    "projects",
+  "nav.contact":     "contact",
+  "nav.download_cv": "download cv",
+  "nav.lang_toggle": "ES",
+
+  "hero.command":    "whoami",
+  "hero.tagline":    "Software Developer",
+  "hero.cta_cv":     "download cv",
+  "hero.cta_contact":"get in touch",
+
+  "about.section":   "~/about",
+  "about.command":   "$ cat about.md",
+  "about.p1":        "I'm a software developer with a passion for building clean, performant, and thoughtful software. I love working across the stack and care deeply about code quality and developer experience.",
+  "about.p2":        "When I'm not writing code, I enjoy exploring new technologies, contributing to open source, and sharing what I learn with the community.",
+  "about.p3":        "I believe great software is built at the intersection of technical rigour and human empathy.",
+
+  "skills.section":  "~/skills",
+  "skills.command":  "$ ls skills/",
+  "skills.group.languages": "Languages",
+  "skills.group.tools":     "Tools & Frameworks",
+  "skills.group.other":     "Other",
+
+  "experience.section": "~/experience",
+  "experience.command": "$ cat experience.log",
+  "experience.present": "Present",
+
+  "education.section": "~/education",
+  "education.command": "$ cat education.log",
+
+  "projects.section": "~/projects",
+  "projects.command": "$ ls projects/",
+  "projects.live":    "live",
+  "projects.repo":    "repo",
+
+  "contact.section":  "~/contact",
+  "contact.command":  "$ echo $CONTACT_INFO",
+  "contact.email":    "Email",
+  "contact.github":   "GitHub",
+  "contact.linkedin": "LinkedIn",
+
+  "footer.made_with": "Built with Astro & ♥"
+}

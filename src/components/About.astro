@@ -1,0 +1,43 @@
+---
+// About.astro
+---
+
+<section id="about" aria-labelledby="about-heading">
+  <div class="section-inner">
+    <h2 id="about-heading" class="section-heading">
+      <span aria-hidden="true" class="prompt">~/</span><span data-i18n="about.section">about</span>
+    </h2>
+    <p class="section-command" aria-hidden="true"><span data-i18n="about.command">$ cat about.md</span></p>
+
+    <div class="about-content">
+      <p data-i18n="about.p1">
+        I'm a software developer with a passion for building clean, performant, and thoughtful software. I love working across the stack and care deeply about code quality and developer experience.
+      </p>
+      <p data-i18n="about.p2">
+        When I'm not writing code, I enjoy exploring new technologies, contributing to open source, and sharing what I learn with the community.
+      </p>
+      <p data-i18n="about.p3">
+        I believe great software is built at the intersection of technical rigour and human empathy.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  #about { padding: 5rem 1.5rem; }
+
+  .section-inner {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .about-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    line-height: 1.7;
+    color: var(--text);
+  }
+
+  .about-content p { margin: 0; }
+</style>

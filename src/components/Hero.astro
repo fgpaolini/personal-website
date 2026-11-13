@@ -1,0 +1,121 @@
+---
+// Hero.astro — full-viewport intro with macOS terminal window
+---
+
+<section id="hero" aria-label="Introduction">
+  <div class="hero-inner">
+    <div class="terminal-window hero-terminal">
+      <!-- macOS title bar -->
+      <div class="terminal-titlebar" aria-hidden="true">
+        <span class="dot dot-red"   title="Close"></span>
+        <span class="dot dot-yellow" title="Minimise"></span>
+        <span class="dot dot-green"  title="Maximise"></span>
+        <span class="title-label">zsh — 80×24</span>
+      </div>
+
+      <!-- Terminal body -->
+      <div class="hero-body" role="presentation">
+        <!-- Line 1: command -->
+        <p class="hero-line line-1" aria-hidden="true">
+          <span class="prompt">❯ </span>whoami
+        </p>
+
+        <!-- Line 2: name (not translated — proper noun) -->
+        <p class="hero-line line-2">
+          <span class="hero-name">Fernando González</span>
+        </p>
+
+        <!-- Line 3: tagline (translated) -->
+        <p class="hero-line line-3">
+          <span data-i18n="hero.tagline" class="hero-tagline">Software Developer</span>
+          <span class="cursor-blink" aria-hidden="true">▋</span>
+        </p>
+
+        <!-- CTAs -->
+        <div class="hero-ctas hero-line line-4">
+          <a
+            href="/cv-en.pdf"
+            download
+            data-cv-link
+            data-i18n="hero.cta_cv"
+            class="bracket-btn"
+            aria-label="Download CV as PDF"
+          >download cv</a>
+          <a
+            href="#contact"
+            data-i18n="hero.cta_contact"
+            class="bracket-btn"
+            aria-label="Scroll to contact section"
+          >get in touch</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5rem 1.5rem 2rem; /* top accounts for fixed nav */
+  }
+
+  .hero-inner {
+    width: 100%;
+    max-width: 640px;
+  }
+
+  .hero-terminal {
+    width: 100%;
+  }
+
+  .hero-body {
+    padding: 1.5rem 1.75rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  /* Staggered fade-in animation */
+  .hero-line {
+    opacity: 0;
+    animation: fadeIn 0.4s ease forwards;
+    margin: 0;
+  }
+  .line-1 { animation-delay: 0.3s; }
+  .line-2 { animation-delay: 0.7s; }
+  .line-3 { animation-delay: 1.1s; }
+  .line-4 { animation-delay: 1.6s; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-line {
+      animation: none;
+      opacity: 1;
+    }
+  }
+
+  .hero-name {
+    font-size: clamp(1.4rem, 5vw, 2rem);
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .hero-tagline {
+    font-size: clamp(0.9rem, 3vw, 1.1rem);
+    color: var(--muted);
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-top: 0.75rem;
+  }
+</style>

@@ -1,0 +1,60 @@
+---
+import { skillGroups } from '../data/skills';
+---
+
+<section id="skills" aria-labelledby="skills-heading">
+  <div class="section-inner">
+    <h2 id="skills-heading" class="section-heading">
+      <span aria-hidden="true" class="prompt">~/</span><span data-i18n="skills.section">skills</span>
+    </h2>
+    <p class="section-command" aria-hidden="true"><span data-i18n="skills.command">$ ls skills/</span></p>
+
+    <div class="skills-groups">
+      {skillGroups.map((group) => (
+        <div class="skill-group">
+          <h3 class="group-label" data-i18n={group.key}>{group.key}</h3>
+          <ul class="skill-list" role="list">
+            {group.skills.map((skill) => (
+              <li role="listitem">
+                <code class="chip">{skill}</code>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  #skills { padding: 5rem 1.5rem; }
+
+  .section-inner {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .skills-groups {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .group-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 0 0 0.6rem;
+  }
+
+  .skill-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+</style>

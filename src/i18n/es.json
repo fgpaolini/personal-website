@@ -1,0 +1,49 @@
+{
+  "a11y.skip_link": "Saltar al contenido principal",
+
+  "nav.about":       "sobre mí",
+  "nav.skills":      "habilidades",
+  "nav.experience":  "experiencia",
+  "nav.education":   "educación",
+  "nav.projects":    "proyectos",
+  "nav.contact":     "contacto",
+  "nav.download_cv": "descargar cv",
+  "nav.lang_toggle": "EN",
+
+  "hero.command":    "whoami",
+  "hero.tagline":    "Desarrollador de Software",
+  "hero.cta_cv":     "descargar cv",
+  "hero.cta_contact":"contáctame",
+
+  "about.section":   "~/sobre-mí",
+  "about.command":   "$ cat sobre-mi.md",
+  "about.p1":        "Soy un desarrollador de software apasionado por crear software limpio, eficiente y bien pensado. Disfruto trabajar en todo el stack y me preocupo mucho por la calidad del código y la experiencia del desarrollador.",
+  "about.p2":        "Cuando no estoy programando, me gusta explorar nuevas tecnologías, contribuir al código abierto y compartir lo que aprendo con la comunidad.",
+  "about.p3":        "Creo que el gran software se construye en la intersección del rigor técnico y la empatía humana.",
+
+  "skills.section":  "~/habilidades",
+  "skills.command":  "$ ls habilidades/",
+  "skills.group.languages": "Lenguajes",
+  "skills.group.tools":     "Herramientas y Frameworks",
+  "skills.group.other":     "Otros",
+
+  "experience.section": "~/experiencia",
+  "experience.command": "$ cat experiencia.log",
+  "experience.present": "Actualidad",
+
+  "education.section": "~/educación",
+  "education.command": "$ cat educacion.log",
+
+  "projects.section": "~/proyectos",
+  "projects.command": "$ ls proyectos/",
+  "projects.live":    "demo",
+  "projects.repo":    "repo",
+
+  "contact.section":  "~/contacto",
+  "contact.command":  "$ echo $INFO_CONTACTO",
+  "contact.email":    "Correo",
+  "contact.github":   "GitHub",
+  "contact.linkedin": "LinkedIn",
+
+  "footer.made_with": "Hecho con Astro & ♥"
+}

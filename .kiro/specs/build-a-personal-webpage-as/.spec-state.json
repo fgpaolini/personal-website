@@ -1,0 +1,29 @@
+{
+  "decisions": [
+    {
+      "id": "tech-stack",
+      "title": "What tech stack should the site use?",
+      "options": ["Plain HTML/CSS/JS (no framework)", "Astro (static, fast, markdown-friendly)", "Next.js (React, SSG)"],
+      "recommended": "Astro (static, fast, markdown-friendly)",
+      "answer": "Astro (static, fast, markdown-friendly)"
+    },
+    {
+      "id": "contact-form",
+      "title": "Should the contact section include a form or just links?",
+      "options": ["Form (with a service like Formspree)", "Links only (email + social)"],
+      "recommended": "Links only (email + social)",
+      "answer": "Links only (email + social)"
+    },
+    {
+      "id": "deploy-target",
+      "title": "Where will the site be deployed?",
+      "options": ["GitHub Pages", "Vercel", "Netlify", "Undecided"],
+      "recommended": "GitHub Pages",
+      "answer": "Undecided"
+    }
+  ],
+  "blocking": null,
+  "context": {
+    "template": "single-page CV + portfolio"
+  }
+}

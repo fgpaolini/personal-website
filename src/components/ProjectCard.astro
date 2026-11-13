@@ -1,0 +1,101 @@
+---
+export interface Props {
+  title: string;
+  description: string;
+  description_es: string;
+  tags: string[];
+  liveUrl?: string;
+  repoUrl?: string;
+  slug: string;
+}
+
+const { title, description, description_es, tags, liveUrl, repoUrl, slug } = Astro.props;
+---
+
+<article
+  class="project-card"
+  data-desc-en={description}
+  data-desc-es={description_es}
+  aria-label={title}
+>
+  <div class="card-header" aria-hidden="true">
+    <span class="prompt card-sigil">❯ </span><span class="card-title">{title}</span>
+  </div>
+
+  <p class="card-desc" id={`desc-${slug}`}>{description}</p>
+
+  <ul class="card-tags" role="list" aria-label="Technologies used">
+    {tags.map((tag) => (
+      <li role="listitem"><code class="chip">{tag}</code></li>
+    ))}
+  </ul>
+
+  <div class="card-links">
+    {liveUrl && (
+      <a
+        href={liveUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="bracket-btn"
+        data-i18n="projects.live"
+        aria-label={`View live demo of ${title}`}
+      >live</a>
+    )}
+    {repoUrl && (
+      <a
+        href={repoUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="bracket-btn"
+        data-i18n="projects.repo"
+        aria-label={`View source code of ${title}`}
+      >repo</a>
+    )}
+  </div>
+</article>
+
+<style>
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    transition: border-color 0.2s;
+  }
+  .project-card:hover { border-color: var(--accent); }
+
+  .card-header {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .card-sigil { font-size: 0.8rem; }
+  .card-title { color: var(--text); }
+
+  .card-desc {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.6;
+    margin: 0;
+    flex: 1;
+  }
+
+  .card-tags {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .card-links {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: auto;
+  }
+</style>

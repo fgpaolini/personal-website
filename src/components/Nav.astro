@@ -1,0 +1,234 @@
+---
+// Nav.astro — sticky top navigation bar with language toggle
+---
+
+<header id="site-nav" role="banner">
+  <nav aria-label="Main navigation">
+    <!-- Desktop nav -->
+    <div class="nav-inner">
+      <!-- Left: prompt logo -->
+      <a href="#hero" class="nav-logo" aria-label="Go to top">
+        <span aria-hidden="true" class="prompt">❯</span>
+        <span class="nav-logo-text">fernando<span class="prompt">@</span>portfolio<span class="prompt">:~$</span></span>
+      </a>
+
+      <!-- Right: links + lang toggle + CV button -->
+      <div class="nav-links" role="list">
+        <a href="#about"      role="listitem" data-nav-link data-i18n="nav.about"      class="nav-link">about</a>
+        <a href="#skills"     role="listitem" data-nav-link data-i18n="nav.skills"     class="nav-link">skills</a>
+        <a href="#experience" role="listitem" data-nav-link data-i18n="nav.experience" class="nav-link">experience</a>
+        <a href="#education"  role="listitem" data-nav-link data-i18n="nav.education"  class="nav-link">education</a>
+        <a href="#projects"   role="listitem" data-nav-link data-i18n="nav.projects"   class="nav-link">projects</a>
+        <a href="#contact"    role="listitem" data-nav-link data-i18n="nav.contact"    class="nav-link">contact</a>
+
+        <!-- Language toggle -->
+        <span class="lang-toggle" aria-label="Language toggle" role="group">
+          <button data-lang-btn="en" class="lang-btn active-lang" aria-pressed="true"  onclick="window.__setLang('en')">EN</button>
+          <span aria-hidden="true" class="lang-sep">/</span>
+          <button data-lang-btn="es" class="lang-btn"             aria-pressed="false" onclick="window.__setLang('es')">ES</button>
+        </span>
+
+        <!-- Download CV -->
+        <a
+          href="/cv-en.pdf"
+          download
+          data-cv-link
+          data-i18n="nav.download_cv"
+          class="bracket-btn nav-cv"
+          aria-label="Download CV"
+        >download cv</a>
+      </div>
+
+      <!-- Mobile hamburger -->
+      <details class="nav-mobile">
+        <summary class="hamburger" aria-label="Toggle navigation menu">
+          <span aria-hidden="true">☰</span>
+        </summary>
+        <div class="mobile-dropdown" role="list">
+          <a href="#about"      role="listitem" data-nav-link data-i18n="nav.about"      class="mobile-link">about</a>
+          <a href="#skills"     role="listitem" data-nav-link data-i18n="nav.skills"     class="mobile-link">skills</a>
+          <a href="#experience" role="listitem" data-nav-link data-i18n="nav.experience" class="mobile-link">experience</a>
+          <a href="#education"  role="listitem" data-nav-link data-i18n="nav.education"  class="mobile-link">education</a>
+          <a href="#projects"   role="listitem" data-nav-link data-i18n="nav.projects"   class="mobile-link">projects</a>
+          <a href="#contact"    role="listitem" data-nav-link data-i18n="nav.contact"    class="mobile-link">contact</a>
+          <div class="mobile-actions">
+            <span class="lang-toggle" role="group" aria-label="Language toggle">
+              <button data-lang-btn="en" class="lang-btn active-lang" onclick="window.__setLang('en')">EN</button>
+              <span aria-hidden="true" class="lang-sep">/</span>
+              <button data-lang-btn="es" class="lang-btn"             onclick="window.__setLang('es')">ES</button>
+            </span>
+            <a href="/cv-en.pdf" download data-cv-link data-i18n="nav.download_cv" class="bracket-btn">download cv</a>
+          </div>
+        </div>
+      </details>
+    </div>
+  </nav>
+</header>
+
+<!-- Scroll-spy + lang wiring -->
+<script>
+  import { setLang } from '../i18n/i18n';
+  import type { Lang } from '../i18n/i18n';
+
+  // Expose setLang globally so onclick handlers can call it
+  (window as any).__setLang = (lang: Lang) => {
+    setLang(lang);
+    // Update aria-pressed on all lang buttons
+    document.querySelectorAll<HTMLButtonElement>('[data-lang-btn]').forEach((btn) => {
+      btn.setAttribute('aria-pressed', String(btn.dataset.langBtn === lang));
+    });
+  };
+
+  // Scroll-spy: highlight active section in nav
+  const sections = document.querySelectorAll<HTMLElement>('section[id]');
+  const navLinks = document.querySelectorAll<HTMLAnchorElement>('[data-nav-link]');
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          navLinks.forEach((link) => {
+            const active = link.getAttribute('href') === `#${entry.target.id}`;
+            link.classList.toggle('nav-active', active);
+            link.setAttribute('aria-current', active ? 'location' : 'false');
+          });
+        }
+      });
+    },
+    { rootMargin: '-40% 0px -55% 0px' }
+  );
+
+  sections.forEach((s) => observer.observe(s));
+
+  // Close mobile menu on nav link click
+  document.querySelectorAll('.mobile-link').forEach((link) => {
+    link.addEventListener('click', () => {
+      const details = document.querySelector<HTMLDetailsElement>('.nav-mobile');
+      if (details) details.open = false;
+    });
+  });
+</script>
+
+<style>
+  header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  /* Logo */
+  .nav-logo {
+    text-decoration: none;
+    font-size: 0.85rem;
+    color: var(--text);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .nav-logo:hover .nav-logo-text { color: var(--accent); }
+
+  /* Desktop links */
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: nowrap;
+  }
+
+  .nav-link {
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .nav-link:hover,
+  .nav-link.nav-active {
+    color: var(--accent);
+  }
+
+  /* Language toggle */
+  .lang-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.75rem;
+  }
+  .lang-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--muted);
+    font-family: inherit;
+    font-size: 0.75rem;
+    padding: 0.1rem 0.2rem;
+    transition: color 0.15s;
+  }
+  .lang-btn:hover,
+  .lang-btn.active-lang {
+    color: var(--accent);
+  }
+  .lang-sep { color: var(--border); }
+
+  /* CV button */
+  .nav-cv { font-size: 0.75rem; }
+
+  /* Mobile hamburger */
+  .nav-mobile { display: none; }
+
+  @media (max-width: 767px) {
+    .nav-links  { display: none; }
+    .nav-mobile { display: block; }
+
+    .hamburger {
+      list-style: none;
+      cursor: pointer;
+      font-size: 1.2rem;
+      color: var(--text);
+      padding: 0.25rem;
+    }
+    .hamburger::-webkit-details-marker { display: none; }
+
+    .mobile-dropdown {
+      position: absolute;
+      top: 56px;
+      left: 0;
+      right: 0;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .mobile-link {
+      font-size: 0.9rem;
+      color: var(--muted);
+      text-decoration: none;
+    }
+    .mobile-link:hover { color: var(--accent); }
+
+    .mobile-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid var(--border);
+      margin-top: 0.25rem;
+    }
+  }
+</style>

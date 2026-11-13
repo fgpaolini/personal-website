@@ -1,0 +1,172 @@
+---
+import { getCollection } from 'astro:content';
+
+const entries = (await getCollection('experience')).sort(
+  (a, b) => b.data.startDate.localeCompare(a.data.startDate)
+);
+---
+
+<section id="experience" aria-labelledby="experience-heading">
+  <div class="section-inner">
+    <h2 id="experience-heading" class="section-heading">
+      <span aria-hidden="true" class="prompt">~/</span><span data-i18n="experience.section">experience</span>
+    </h2>
+    <p class="section-command" aria-hidden="true"><span data-i18n="experience.command">$ cat experience.log</span></p>
+
+    <ol class="timeline" role="list">
+      {entries.map((entry) => {
+        const { company, role, role_es, startDate, endDate, bullets, bullets_es } = entry.data;
+        // Format dates: "YYYY-MM" → "Mon YYYY"
+        const fmt = (d: string) => {
+          const [y, m] = d.split('-');
+          return new Date(Number(y), Number(m) - 1).toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+        };
+        const start = fmt(startDate);
+        const entriesId = `exp-${entry.slug}`;
+
+        return (
+          <li class="timeline-entry" role="listitem">
+            <div class="timeline-dot" aria-hidden="true"></div>
+            <div class="timeline-content">
+              <div class="entry-header">
+                <div>
+                  <span class="entry-role" data-i18n-en={role} data-i18n-es={role_es}>{role}</span>
+                  <span class="entry-company"> @ {company}</span>
+                </div>
+                <span class="entry-dates" aria-label={`${start} to ${endDate ? fmt(endDate) : 'Present'}`}>
+                  {start} – <span data-i18n-en={endDate ? fmt(endDate) : 'Present'} data-i18n-es-present={!endDate} data-i18n={!endDate ? 'experience.present' : undefined}>{endDate ? fmt(endDate) : 'Present'}</span>
+                </span>
+              </div>
+              <ul class="entry-bullets" role="list" id={entriesId}
+                  data-bullets-en={JSON.stringify(bullets)}
+                  data-bullets-es={JSON.stringify(bullets_es)}>
+                {bullets.map((b) => <li role="listitem">{b}</li>)}
+              </ul>
+            </div>
+          </li>
+        );
+      })}
+    </ol>
+  </div>
+</section>
+
+<!-- Swap bullets on language change -->
+<script>
+  import { detectLang } from '../i18n/i18n';
+  import type { Lang } from '../i18n/i18n';
+
+  function applyBullets(lang: Lang) {
+    document.querySelectorAll<HTMLElement>('[data-bullets-en]').forEach((ul) => {
+      const bullets: string[] = JSON.parse(
+        lang === 'es' ? ul.dataset.bulletsEs! : ul.dataset.bulletsEn!
+      );
+      ul.innerHTML = bullets.map((b) => `<li role="listitem">${b}</li>`).join('');
+    });
+    // Swap role labels
+    document.querySelectorAll<HTMLElement>('[data-i18n-en]').forEach((el) => {
+      el.textContent = lang === 'es' ? el.dataset.i18nEs! : el.dataset.i18nEn!;
+    });
+  }
+
+  // Apply on load
+  applyBullets(detectLang());
+
+  // Listen for future lang changes
+  document.addEventListener('langchange', (e: Event) => {
+    applyBullets((e as CustomEvent<Lang>).detail);
+  });
+</script>
+
+<style>
+  #experience { padding: 5rem 1.5rem; }
+
+  .section-inner {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .timeline {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: relative;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 8px;
+    bottom: 0;
+    width: 1px;
+    background: var(--border);
+  }
+
+  .timeline-entry {
+    display: flex;
+    gap: 1.25rem;
+    padding-bottom: 2.5rem;
+    position: relative;
+  }
+
+  .timeline-dot {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    background: var(--bg);
+    flex-shrink: 0;
+    margin-top: 2px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .timeline-content { flex: 1; }
+
+  .entry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .entry-role {
+    font-weight: 700;
+    color: var(--text);
+    font-size: 0.95rem;
+  }
+  .entry-company {
+    color: var(--accent);
+    font-size: 0.9rem;
+  }
+  .entry-dates {
+    font-size: 0.75rem;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .entry-bullets {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .entry-bullets li {
+    font-size: 0.85rem;
+    color: var(--text);
+    padding-left: 1rem;
+    position: relative;
+    line-height: 1.5;
+  }
+  .entry-bullets li::before {
+    content: '–';
+    position: absolute;
+    left: 0;
+    color: var(--muted);
+  }
+</style>
